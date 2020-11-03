@@ -1,0 +1,19 @@
+{
+    "name": "vendor/blogue",
+    "description": "projets opc",
+    "authors": [{
+        "name": "abde",
+        "email": "chabane.abdelkarim@worldweb.fr"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Blogue\\": "vendor/blogue/",
+            "App\\": "src/Controller/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.1",
+        "symfony/yaml": "^5.1",
+        "symfony/twig-bridge": "^5.1"
+    }
+}

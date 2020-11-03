@@ -1,0 +1,13 @@
+# routeName:
+#      path: 'test'
+#      controller: controllerName
+
+home:
+  path: 'home'
+  controller: 'HomeController'
+  methode: 'index'
+
+billets:
+  path: 'billets'
+  controller: 'BilletController'
+  methode: 'index'

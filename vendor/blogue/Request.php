@@ -5,11 +5,6 @@ namespace Blogue;
 class Request
 {
 
-
-    public function __construct()
-    {
-    }
-
     public function get(string $methode, string $index = null)
     {
         if ($index !== null) {
@@ -24,14 +19,11 @@ class Request
 
         switch ($methode) {
             case "POST":
-                if(!empty($_POST)) return $_POST;
+                if (!empty($_POST)) return $_POST;
                 break;
             case 'GET':
-                if(!empty($_GET)) return $_GET;
+                if (!empty($_GET)) return $_GET;
         }
-
-
-
     }
 
     public function getMethode(): string
@@ -45,6 +37,13 @@ class Request
     public function getPath(): string
     {
         return  $_SERVER['DOCUMENT_ROOT'];
+    }
+
+    public function getNameOfRootFolder()
+    {
+        $path = $_SERVER['REQUEST_URI'];
+        $root = explode("/", $path);
+        return $root[1];
     }
 
 
@@ -64,5 +63,4 @@ class Request
         }
         return '';
     }
-
 }

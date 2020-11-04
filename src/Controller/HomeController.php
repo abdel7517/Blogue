@@ -9,7 +9,7 @@ class HomeController extends Controller{
     }
 
     public function index(){
-        $this->render('base.html.twig', ['test'=> 'carré les test ']);
+        $this->render('base.html.twig',['id'=> 11]);
     }
   
  }

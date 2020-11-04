@@ -38,6 +38,11 @@ class Request
     {
         return  $_SERVER['DOCUMENT_ROOT'];
     }
+    
+    public function getRequest(): string
+    {
+        return  $_SERVER['REQUEST_URI'];
+    }
 
     public function getNameOfRootFolder()
     {

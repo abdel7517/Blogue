@@ -1,0 +1,2 @@
+                $pathPublic = $this->rootFolder .'/public/index' . '/'. $path;
+ ====> s ajoute a la fin de l'url quand on click sur le liens 

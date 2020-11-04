@@ -2,15 +2,17 @@
 namespace App;
 
 use Blogue\Controller;
+use Blogue\Request;
 
 class BilletController extends Controller{
-
+    private $request;
     public function __construct()
     {
-        //call to get Route
+        $this->request = New Request;
     }
 
     public function getAllBillet(){
+        $this->render('test.html.twig');
     }
     
     public function index(){

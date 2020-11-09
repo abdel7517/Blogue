@@ -1,4 +1,4 @@
-# routeName:
+# routeName: the name of route must contain on the path
 #      path: 'test' (regex of URL)
 #      controller: controllerName
 #      methode: methodeToCall
@@ -18,11 +18,6 @@ routes:
     controller: 'PostsController'
     methode: 'getPost'
 
-  admin:
-    path: '#admin$#i'
-    controller: 'AdminController'
-    methode: 'index'
-
   login:
     path: '#login$#i'
     controller: 'LoginController'
@@ -32,13 +27,36 @@ routes:
     path: '#register$#i'
     controller: 'LoginController'
     methode: 'register'
+  
+  admin:
+    path: '#admin$#i'
+    controller: 'AdminController'
+    methode: 'index'
 
-#if roads need password 
+  admin/add:
+    path: '#admin/add$#i'
+    controller: 'AdminController'
+    methode: 'addPost'
+
+  admin/update:
+    path: '#admin/update/[1-9]{1,}$$#i'
+    controller: 'AdminController'
+    methode: 'update'
+  
+  admin/delete:
+    path: '#admin/delete/[1-9]{1,}$$#i'
+    controller: 'AdminController'
+    methode: 'delete'
+
+
+
+#if roads need to log and a specific role 
 firewall:
   admin:
     route: 'admin'
     role: 'admin'
 
-#if app need log controller 
-# login: 
-#  controller: LoginController
+#if app need login controller 
+login: 
+ controller: LoginController
+ methode: log

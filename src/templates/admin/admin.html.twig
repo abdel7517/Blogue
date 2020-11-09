@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Document
+		</title>
+	</head>
+	<body>
+		{% block name %}
+			<a href=" {{path('admin/add')}} ">
+				Ajoutez un nouveau billet
+			</a>
+		{% endblock %}
+
+		{% block posts %}
+			{% for post in posts %}
+				<p>
+					<a href=" {{ path('admin/update', {'id': post.id}) }} ">
+						{{ post.title }}
+					</a>
+				</p>
+			{% endfor %}
+		{% endblock %}
+	</body>
+</html>

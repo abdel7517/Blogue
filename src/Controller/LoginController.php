@@ -17,8 +17,8 @@ class LoginController extends Controller
         $errorMessage = '';
         $method = $request->getMethode();
         if ($method == "POST") {
-            $mailUser = $request->get('POST', 'mail');
-            $password = $request->get('POST', 'mdp');
+            $mailUser = $request->getPost( 'mail');
+            $password = $request->getPost('mdp');
             $userData = array();
           
             $response = $user->getData($mailUser);
@@ -49,9 +49,9 @@ class LoginController extends Controller
         $errorMessage = '';
         $method = $request->getMethode();
         if ($method == "POST") {
-            $mailUser = $request->get('POST', 'mail');
-            $password = $request->get('POST', 'mdp');
-            $userName = $request->get('POST', 'userName');
+            $mailUser = $request->getPost( 'mail');
+            $password = $request->getPost( 'mdp');
+            $userName = $request->getPost( 'userName');
             $userData = array();
             $userData['mail'] = $mailUser;
             $userData['pass'] = $password;

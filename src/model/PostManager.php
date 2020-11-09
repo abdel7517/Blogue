@@ -7,16 +7,13 @@ use PDO;
 class PostManager extends Manager
 {
 
-    public function addPost($nom, $titre,  $infos, $image = 0)
+    public function addPost($title, $content)
     {
         $bdd = $this->dbConnect();
-        $req = $bdd->prepare('INSERT INTO posts (nom, titre, jour, infos, photo) VALUES(:nom, :titre, NOW(), :infos, :photo)');
+        $req = $bdd->prepare('INSERT INTO posts (title, content, day) VALUES(:title, :content, NOW())');
         $req->execute(array(
-            'nom' => $nom,
-            'titre' => $titre,
-            'infos' => $infos,
-            'photo' => $image
-
+            'title' => $title,
+            'content' => $content
         ));
     }
 
@@ -36,5 +33,25 @@ class PostManager extends Manager
         $response = $bdd->query('SELECT id, title FROM posts');
         $array = $response->fetchAll(PDO::FETCH_ASSOC);
         return $array;
+    }
+
+    public function updatePost($title, $content, $id)
+    {
+        $bdd = $this->dbConnect();
+        $req = $bdd->prepare("UPDATE posts SET title=:title, content=:content WHERE id=:id");
+        $req->execute(array(
+            'title' => $title,
+            'content' => $content,
+            'id'=> $id
+        ));
+    }
+
+    public function deletePost( $id)
+    {
+        $bdd = $this->dbConnect();
+        $req = $bdd->prepare("DELETE FROM posts  WHERE id=:id");
+        $req->execute(array(
+            'id'=> $id
+        ));
     }
 }

@@ -51,35 +51,72 @@ class Routeur
 
     private function getController(array $route, string $nameOfRoute)
     {
-        $controller = $this->controllerPath;
-        if (file_exists($controller)) {
-            require_once($this->path . '/' . $this->rootFolder . '/src/Controller/' . $route['controller'] . '.php');
+        $controllerFile = $this->controllerPath . $route['controller'] . '.php';
+        if ($this->checkIfFileExist($route, $controllerFile)) {
+            require_once($controllerFile);
+
             $className = '\App' . '\\Controller\\' . $route['controller'];
-            if (class_exists($className)) {
+            if ($this->checkIfClassExist($route, $className)) {
+
                 $controller = new $className;
                 if ($controller instanceof Controller) {
                     //check firewall
                     $firWall = new Firewall;
                     if ($firWall->userNeedToLog($nameOfRoute)) {
-                        $this->controller->render('login.html.twig');
+                        $this->callToLoginController();
+
                     } else {
-                        // call to methode associate to the route 
-                        $methode = $route['methode'];
-                        // check if methode exist (methode_exist)
-                        if (method_exists($className, $methode)) {
-                            $controller->$methode();
-                        } else {
-                            throw new Exception('La méthode ' . $methode . ' n\'existe pas dans le class ' . $className . ' à la ligne ' . __LINE__);
-                        }
+                      $this->callToMethode($route, $className, $controller);
                     }
                 } else {
                     throw new Exception('L\'objet $controller  n\'est pas une instance de la class Controller. ligne ' . __LINE__);
                 }
-            } else {
-                throw new Exception('la classe ' . $route["controller"] . ' n\'existe pas. Ligne ' . __LINE__);
             }
+        }
+    }
+
+
+
+    private function checkIfFileExist(array $route, string $controllerPath)
+    {
+        if (file_exists($controllerPath)) {
+            return true;
         } else {
             throw new Exception('le fichier  ' . $route['controller'] . '.php n\'existe pas. Ligne ' . __LINE__);
         }
+    }
+
+    private function checkIfClassExist(array $route, string $className)
+    {
+        if (class_exists($className)) {
+            return true;
+        } else {
+            throw new Exception('la classe ' . $route["controller"] . ' n\'existe pas. Ligne ' . __LINE__);
+        }
+    }
+
+    private function callToLoginController()
+    {
+        $loginControllerOnRouteFile = $this->routesFile['login'];
+        $pathLoginController = $this->controllerPath . $loginControllerOnRouteFile['controller'] . '.php';
+        if ($this->checkIfFileExist($loginControllerOnRouteFile, $pathLoginController)) {
+            $className = '\App' . '\\Controller\\' . $loginControllerOnRouteFile['controller'];
+            if ($this->checkIfClassExist($loginControllerOnRouteFile, $className)) {
+                $loginController = new $className;
+                $this->callToMethode($loginControllerOnRouteFile, $className, $loginController);
+
+            }
+        }
+    }
+
+    private function callToMethode($route, $className, $controller){
+          // call to methode associate to the route 
+          $methode = $route['methode'];
+          // check if methode exist (methode_exist)
+          if (method_exists($className, $methode)) {
+              $controller->$methode();
+          } else {
+              throw new Exception('La méthode ' . $methode . ' n\'existe pas dans le class ' . $className . ' à la ligne ' . __LINE__);
+          }
     }
 }

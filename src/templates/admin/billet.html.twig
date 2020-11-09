@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Document
+		</title>
+	</head>
+	<body>
+		{% block post %}
+			<p>
+				{{ post.title }}
+			</p>
+			<p>
+				{{ post.content }}
+			</p>
+		{% endblock %}
+        {% block form %}
+            <form action=" {{ path('admin/update', {'id': post.id }) }} " method="post">
+                <input type="text" value='{{ post.title }}' name='title'>
+                <input type="text" name="content" value=' {{ post.content }} '>
+                <input type="submit" value="Envoyer">
+            </form>
+			<p>
+				<a href=" {{ path('admin/delete', {'id': post.id}) }} ">SUPRIMER</a>
+			</p>
+        {% endblock %}
+	</body>
+</html>

@@ -13,15 +13,14 @@
 		<section id="content">
 			{% block content %}
 				<p>
-					Mon template twig est bon
-				<a href="{{ path('billet', {'id' : 11}) }}">voir billets</a>
+					Welcome to the home page
 				</p>
+				<a href="{{ path('billets') }}">voir billets</a>
 			{% endblock %}
 		</section>
 		<footer id="footer">
 			{% block footer %}
-				&copy; Copyright 2020
-				
+				&copy; Copyright 
 				.
 			{% endblock %}
 		</footer>

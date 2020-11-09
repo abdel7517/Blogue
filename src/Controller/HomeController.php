@@ -1,5 +1,5 @@
 <?php 
-namespace App;
+namespace App\Controller;
 
 use Blogue\Controller;
 
@@ -9,7 +9,7 @@ class HomeController extends Controller{
     }
 
     public function index(){
-        $this->render('base.html.twig',['id'=> 11]);
+        $this->render('base.html.twig');
     }
   
  }

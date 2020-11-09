@@ -2,13 +2,43 @@
 #      path: 'test' (regex of URL)
 #      controller: controllerName
 #      methode: methodeToCall
+routes:
+  home:
+    path: '#home|index\.?(php)?$#i'
+    controller: 'HomeController'
+    methode: 'index'
 
-home:
-  path: '#index\.?(php)?$#i'
-  controller: 'HomeController'
-  methode: 'index'
+  billets:
+    path: '#billets#i'
+    controller: 'PostsController'
+    methode: 'getAllposts'
 
-billet:
-  path: '#billet/[1-9]{1,}$#i'
-  controller: 'BilletController'
-  methode: 'index'
+  billet:
+    path: '#billet/[1-9]{1,}$#i'
+    controller: 'PostsController'
+    methode: 'getPost'
+
+  admin:
+    path: '#admin$#i'
+    controller: 'AdminController'
+    methode: 'index'
+
+  login:
+    path: '#login$#i'
+    controller: 'LoginController'
+    methode: 'log'
+  
+  register:
+    path: '#register$#i'
+    controller: 'LoginController'
+    methode: 'register'
+
+#if roads need password 
+firewall:
+  admin:
+    route: 'admin'
+    role: 'admin'
+
+#if app need log controller 
+# login: 
+#  controller: LoginController

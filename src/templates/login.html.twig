@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Login
+		</title>
+	</head>
+	<body>
+		{% block name %}
+			<p>
+				{{ errorMessage }}
+			</p>
+			Page de co...
+			<a href=" {{ path('login') }} "></a>
+			<form action="{{ path('login') }}" method="post">
+				<input type="text" name="mail" value="mail">
+				<input type="text" name="mdp" value="mdp">
+				<input type="submit" value="envoyer">
+			</form>
+			<p>
+				<a href=" {{ path('register') }} ">Pas de compte ?</a> 
+			</p>
+		{% endblock %}
+	</body>
+</html>

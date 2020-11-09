@@ -1,2 +1,2 @@
-                $pathPublic = $this->rootFolder .'/public/index' . '/'. $path;
- ====> s ajoute a la fin de l'url quand on click sur le liens 
+register the user data on session 
+on firewall finish routeNeedPermission method

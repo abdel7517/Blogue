@@ -41,6 +41,7 @@ class Controller{
             return;
         }
         echo $template->render();
+        return;
 
 
         

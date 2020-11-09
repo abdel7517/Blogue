@@ -2,6 +2,8 @@
 
 namespace Blogue;
 
+use Exception;
+
 class Request
 {
 
@@ -50,6 +52,33 @@ class Request
         $root = explode("/", $path);
         return $root[1];
     }
+
+    public function newSession(string $index, $value){
+        if(session_id())
+        {
+
+            $_SESSION[$index] = $value;
+
+        }
+        else{
+            session_start();
+            $_SESSION[$index] = $value;
+        }
+    }
+
+    public function getSession(string $index){
+        if(session_id())
+        {
+            if(!empty($_SESSION[$index])){
+                return $_SESSION[$index];
+            }else{
+                return 'r';
+            }
+
+        }
+        return 'no session';
+    }
+  
 
 
 

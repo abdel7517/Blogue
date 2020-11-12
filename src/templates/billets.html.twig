@@ -2,10 +2,10 @@
 	<a href=" {{ path('index') }} ">
 		retour acceuil
 	</a>
-	{% for post in posts %}
-		<br>
-		<a href=" {{ path('billet', {'id': post.id}) }} ">
-			{{ post.title }}
-		</a>
-	{% endfor %}
+		{% for post in posts %}
+			<br>
+			<a href=" {{ path('billet', {'id': post.id}) }} ">
+				{{ post.title|striptags|raw }}
+			</a>
+		{% endfor %}
 {% endblock %}

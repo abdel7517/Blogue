@@ -1,8 +1,14 @@
 {% block name %}
-<p>
-{{ post.title }}
-</p>
-<p>
-{{ post.content }}
-</p>
+	{% autoescape false %}
+		<p>
+			{{ post.title }}
+		</p>
+		<p>
+			{{ post.content }}
+		</p>
+	{% endautoescape %}
+	<a href=" {{ path('billets') }} ">
+		Retour
+	</a>
+    {% if user  %}{% endif %}
 {% endblock %}

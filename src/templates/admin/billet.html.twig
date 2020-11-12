@@ -8,23 +8,43 @@
 		</title>
 	</head>
 	<body>
-		{% block post %}
-			<p>
-				{{ post.title }}
-			</p>
-			<p>
-				{{ post.content }}
-			</p>
+		{% autoescape false %}
+			{% block post %}
+				<p>
+					{{ post.title }}
+				</p>
+				<p>
+					{{ post.content }}
+				</p>
+			{% endblock %}
+			{% block form %}
+				<form action=" {{ path('admin/update', {'id': post.id }) }} " method="post">
+					<input type="text" value='{{ post.title }}' name='title' id="title">
+					<input type="text" name="content" value=' {{ post.content }} ' id="content">
+					<input type="submit" value="Envoyer">
+				</form>
+				<p>
+					<a href=" {{ path('admin/delete', {'id': post.id}) }} ">
+						SUPRIMER
+					</a>
+				</p>
+				<p>
+					<a href=" {{ path('admin') }} ">
+						Retour
+					</a>
+				</p>
+			{% endblock %}
+
+		{% endautoescape %}
+		{% block tiny %}
+
+			<script src='https://cdn.tiny.cloud/1/10krz54m4a1cvvgfg5ka98pl4ht4tgv3n7le0zcx9g9wpl72/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+			<script>
+				tinymce.init({selector: '#content'});
+				tinymce.init({selector: '#title'});
+			</script>
+
 		{% endblock %}
-        {% block form %}
-            <form action=" {{ path('admin/update', {'id': post.id }) }} " method="post">
-                <input type="text" value='{{ post.title }}' name='title'>
-                <input type="text" name="content" value=' {{ post.content }} '>
-                <input type="submit" value="Envoyer">
-            </form>
-			<p>
-				<a href=" {{ path('admin/delete', {'id': post.id}) }} ">SUPRIMER</a>
-			</p>
-        {% endblock %}
+
 	</body>
 </html>

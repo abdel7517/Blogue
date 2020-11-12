@@ -7,11 +7,31 @@
 			Document
 		</title>
 	</head>
-	<body>
-		<form action=" {{ path('admin/add') }} " method="post">
-			<input type="text" name='title' value='titre'>
-			<input type="text" name='content' value='lorem lipsu ....'>
-            <input type="submit" value="envoyer">
-		</form>
-	</body>
+	{% block name %}
+		<body>
+			<form action=" {{ path('admin/add') }} " method="post">
+				<input type="text" name='title' value='titre' id="title">
+				<input type="text" name='content' value='lorem lipsu ....' id="content">
+				<input type="submit" value="envoyer">
+			</form>
+		</body>
+		<p>
+			<a href=" {{ path('admin') }} ">
+				Retour
+			</a>
+		</p>
+	{% endblock %}
+	{% block tiny %}
+
+  <script src='https://cdn.tiny.cloud/1/10krz54m4a1cvvgfg5ka98pl4ht4tgv3n7le0zcx9g9wpl72/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+  <script>
+  tinymce.init({
+    selector: '#content'
+  });
+   tinymce.init({
+    selector: '#title'
+  });
+  </script>
+
+	{% endblock %}
 </html>

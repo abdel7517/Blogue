@@ -23,6 +23,11 @@ routes:
     controller: 'LoginController'
     methode: 'log'
   
+  disconnect:
+    path: '#disconnect$#i'
+    controller: 'LoginController'
+    methode: 'disconnect'
+  
   register:
     path: '#register$#i'
     controller: 'LoginController'

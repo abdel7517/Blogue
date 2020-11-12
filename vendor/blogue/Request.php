@@ -60,6 +60,9 @@ class Request
         return '';
     }
   
+    public function sessionDestroy(){
+        return session_destroy();
+    }
 
 
 

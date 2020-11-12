@@ -23,7 +23,7 @@ class Firewall
             if ($routeNeedPassWord['route'] == $nameOfRoute) {
                 // check if the user are loged 
                 $user = $this->request->getSession('user');
-                if ($user['role'] !== '') {
+                if ($user !== '') {
                     // if loged he have the good role ?
                     if($user['role'] == $routeNeedPassWord['role'] ){
                         return false;

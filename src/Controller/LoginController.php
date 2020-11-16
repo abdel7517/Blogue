@@ -33,7 +33,7 @@ class LoginController extends Controller
             $password = $request->getPost('mdp');
             $userData = array();
 
-            $response = $user->getData($mailUser);
+            $response = $user->checkMail($mailUser);
             //if true register the state of user on session 
             if ($response) {
                 if ($response['pass'] == $password) {
@@ -76,20 +76,26 @@ class LoginController extends Controller
             $userData['mail'] = $mailUser;
             $userData['pass'] = $password;
             $userData['userName'] = $userName;
-            $response = $user->getData($mailUser);
-            //if true register user on session 
-            if (!$response) {
-                if ($password == $checkPassword) {
-                    if (filter_var($mailUser, FILTER_VALIDATE_EMAIL)) {
-                        $errorMessage = 'Vous êtes connecté avec succés ';
-                        $request->newSession("user", $userData);
-                        $user->newUser($userName, $mailUser, $password);
-                    }else{
-                        $errorMessage = 'Le format de l\'email est incorrect ';
+            $userData['role'] = null;
+            $mailUsed = $user->checkMail($mailUser);
+            $userNameUsed = $user->checkUserName($userName);
 
+            //if true register user on session 
+            if (!$mailUsed) {
+                if (!$userNameUsed) {
+                    if ($password == $checkPassword) {
+                        if (filter_var($mailUser, FILTER_VALIDATE_EMAIL)) {
+                            $errorMessage = 'Vous êtes connecté avec succés ';
+                            $request->newSession("user", $userData);
+                            $user->newUser($userName, $mailUser, $password);
+                        } else {
+                            $errorMessage = 'Le format de l\'email est incorrect ';
+                        }
+                    } else {
+                        $errorMessage = 'Les mots de passe ne sont pas identique ';
                     }
                 } else {
-                    $errorMessage = 'Les mots de passe ne sont pas identique ';
+                    $errorMessage = 'Le nom d\'utilisateur entré n\'est pas disponible  ';
                 }
             } else {
                 $errorMessage = 'Cette email est déja utilisé';

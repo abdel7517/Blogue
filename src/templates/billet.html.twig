@@ -3,6 +3,7 @@
 		<p>
 			{{ post.title }}
 		</p>
+		<span> Posté le {{ post.day|date("m/d/Y") }} </span>
 		<p>
 			{{ post.content }}
 		</p>
@@ -10,5 +11,20 @@
 	<a href=" {{ path('billets') }} ">
 		Retour
 	</a>
-    {% if user  %}{% endif %}
+	{% if log is defined  %}
+		<form action=" {{ path('post_comment', {'id': post.id }) }} " method='POST'>
+			<input type="text" value="Votre commentaire" name='content'>
+			<input type="submit" value="Envoyer">
+		</form>
+	{% endif %}
+	<h2>
+		Commentaires:
+	</h2>
+	{% for comment in comments %}
+		<p>
+			{{comment.user_Name}}
+			:
+			{{comment.content}}
+		</p>
+	{% endfor %}
 {% endblock %}

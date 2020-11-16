@@ -6,6 +6,7 @@ use PDO;
 
 class PostManager extends Manager
 {
+  
 
     public function addPost($title, $content)
     {

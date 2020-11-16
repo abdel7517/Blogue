@@ -44,14 +44,19 @@ routes:
     methode: 'addPost'
 
   admin/update:
-    path: '#admin/update/[1-9]{1,}$$#i'
+    path: '#admin/update/[1-9]{1,}$#i'
     controller: 'AdminController'
     methode: 'update'
   
   admin/delete:
-    path: '#admin/delete/[1-9]{1,}$$#i'
+    path: '#admin/delete/[1-9]{1,}$#i'
     controller: 'AdminController'
     methode: 'delete'
+
+  post_comment:
+    path: '#post_comment/[1-9]{1,}$#i'
+    controller: 'CommentsController'
+    methode: 'postComment'
 
 
 

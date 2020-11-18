@@ -21,8 +21,8 @@ class PostManager extends Manager
     public function getPost($idPost)
     {
         $bdd = $this->dbConnect();
-        $req = $bdd->prepare('SELECT * FROM posts WHERE id = ?');
-        $req->execute(array($idPost));
+        $req = $bdd->prepare('SELECT * FROM posts WHERE id = :id');
+        $req->execute(array('id'=> $idPost));
         $rep = $req->fetch();
 
         return $rep;

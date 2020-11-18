@@ -40,7 +40,7 @@ class LoginController extends Controller
                     $errorMessage = 'Vous êtes connecté avec succés ';
                     $userData['role'] = $response['role'];
                     $userData['mail'] = $response['mail'];
-                    $userData['userName'] = $response['userName'];
+                    $userData['userName'] = $response['user_Name'];
                     $request->newSession("user", $userData);
                     return $this->log();
                 } else {

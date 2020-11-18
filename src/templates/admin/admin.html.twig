@@ -8,6 +8,13 @@
 		</title>
 	</head>
 	<body>
+
+	<p>Commentaires signalez : </p>
+	{% for comment in comments %}
+		<p>id du post ou le commentaires est signalez : {{ comment.id_Post }} <br>
+		nombre de signalement unique : {{ comment.nbOfReport }}
+			</p>
+	{% endfor %}
 		{% block name %}
 			<a href=" {{path('admin/add')}} ">
 				Ajoutez un nouveau billet

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\model\CommentsManager;
@@ -7,36 +8,112 @@ use Blogue\Request;
 use Blogue\Controller;
 use App\model\PostManager;
 
-class CommentsController extends Controller{
+class CommentsController extends Controller
+{
 
-    private $request, $commentsManager, $postManager;
+    private $request, $commentsManager, $postManager, $userSession;
+    private $aleradyPosted = false;
     public function __construct()
     {
         $this->request = new Request;
         $this->commentsManager = new CommentsManager;
         $this->postManager = new PostManager;
-
-
+        $this->userSession = $this->request->getSession('user');
     }
-    
-    public function postComment(){
-        $path = $this->request->getRequest();
-        $id = array();
-        preg_match('#[1-9]{1,}#', $path, $id);
+
+    public function reportComment()
+    {
+        $this->getParametersUrl();
+        $userSession = $this->request->getSession('user');
+        //get the id of comment and post 
+        $id = $this->getParametersUrl();
+        $id_post = $id[0];
+        $id_comment = $id[1];
+        //get reports of this comment on db 
+        $reportSerialised = $this->commentsManager->getReport($id_comment, $id_post);
+        $UsersNameReport = unserialize($reportSerialised);
         $post = $this->postManager->getPost($id[0]);
-
-        if (count($id) <= 1) {
-            if ($this->request->getMethode() == 'POST') {
-                $userSession = $this->request->getSession('user');
-
-                $content = $this->request->getPost('content');
-                $id_post = $id[0];
-                $user_Name = $userSession['userName'];
-                $this->commentsManager->addComment($id_post, $user_Name, $content);
+        $comments = $this->commentsManager->getComments();
+        $message = "";
+        if($UsersNameReport !== false){
+            foreach ($UsersNameReport as $UserNameReport) {
+                if ($UserNameReport == $userSession['userName']) {
+                    //already signal 
+                    $message =  'Vous avez déja signalez ce commentaire';
+                    $this->aleradyPosted = true;
+                    return $this->render('billet.html.twig', [
+                        'post'=> $post, 'log'=> true, 'comments'=> $comments, 
+                        'id' => $id[0],'user_name' => $userSession['userName'],
+                        'message'=> $message
+                        ]);
+                } 
             }
-            return $this->render('billet.html.twig', ['post' => $post, 'log'=> true]);
+        }
+        if($this->aleradyPosted == false){
+            $UsersNameReport[] = $userSession['userName'];
+            $UsersNameReportSerialized = serialize($UsersNameReport);
+            $this->commentsManager->addReport($UsersNameReportSerialized,$id_comment);
+            $message = 'Vous avez bien signalez ce commentaire';
+            return $this->render('billet.html.twig', [
+                'post'=> $post, 'log'=> true, 'comments'=> $comments, 
+                'id' => $id[0],'user_name' => $userSession['userName'],
+                'message'=> $message
+                ]);
+        }
+    }
+
+    public function deleteComment()
+    {
+
+        $id = $this->getMultipleId();
+        $id_comment = $id[0][0];
+        $id_post = $id[0][1];
+        $this->commentsManager->deleteComment($id_comment);
+
+        $post = $this->postManager->getPost($id_post);
+        $comments = $this->commentsManager->getComments();
+        $user_Name = $this->userSession['userName'];
+
+        return $this->render('billet.html.twig', [
+            'post' => $post, 'log' => true, 'comments' => $comments, 'user_name' => $user_Name
+        ]);
+    }
+
+    public function postComment()
+    {
+        $id_post = $this->getId();
+        $post = $this->postManager->getPost($id_post[0]);
+
+
+        $content = $this->request->getPost('content');
+        $user_Name = $this->userSession['userName'];
+        if (count($id_post) <= 1) {
+            if ($this->request->getMethode() == 'POST') {
+                $this->commentsManager->addComment($id_post[0], $user_Name, $content);
+            }
+            $comments = $this->commentsManager->getComments();
+
+            return $this->render('billet.html.twig', [
+                'post' => $post, 'log' => true, 'comments' => $comments, 'user_name' => $user_Name
+            ]);
         } else {
             new Exception('L\'url doit contenir un seul id ' . __FILE__ . 'ligne : ' . __LINE__);
         }
+    }
+
+    private function getId()
+    {
+        $path = $this->request->getRequest();
+        $id = array();
+        preg_match('#[1-9]{1,}#', $path, $id);
+        return $id;
+    }
+
+    //return an array of multiple id in the order entered in the url
+    private function getMultipleId()
+    {
+        $path = $this->request->getRequest();
+        preg_match_all('#\d+#', $path, $id);
+        return $id;
     }
 }

@@ -57,7 +57,16 @@ routes:
     path: '#post_comment/[1-9]{1,}$#i'
     controller: 'CommentsController'
     methode: 'postComment'
+  
+  deleteComment:
+    path: '#deleteComment/[0-9]{1,}/[0-9]{1,}$#i'
+    controller: 'CommentsController'
+    methode: 'deleteComment'
 
+  reportComment:
+    path: '#reportComment/[0-9]{1,}/\w{1,}#i'
+    controller: 'CommentsController'
+    methode: 'reportComment'
 
 
 #if roads need to log and a specific role 

@@ -1,0 +1,16 @@
+<nav>
+	<p>
+		{% if loged ==  true %}
+			<a href="{{ path('disconnect') }}">
+				Se Déconecter
+			</a>
+		{% else %}
+			<a href="{{ path('login') }}">
+				Se Connecter
+			</a>
+		{% endif %}
+	</p>
+    <p>
+        <a href=" {{ path('home') }} ">Acceuil</a>
+    </p>
+</nav>

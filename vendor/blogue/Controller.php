@@ -34,10 +34,18 @@ class Controller
         $path = $_SERVER['REQUEST_URI'];
         $root = explode("/", $path);
         $rooteFolder = $root[1];
+        $loged = "";
+      
+            if(!empty($_SESSION['user'])){
+                $loged = true;
+            }
+
+        
 
         $loader = new Filesystem($_SERVER['DOCUMENT_ROOT'] . '/' . $rooteFolder . '/src/templates');
         $twig = new Environment($loader);
-        $function = new TwigFunction('path', function (string $path, array $options = null) {
+        $twig->addGlobal('loged', $loged);
+        $pathFunction = new TwigFunction('path', function (string $path, array $options = null) {
             $request = $_SERVER['REQUEST_URI'];
             $root = explode("/", $request);
             $rooteFolder = $root[1];
@@ -47,10 +55,16 @@ class Controller
                     $this->pathToReturn = $this->pathToReturn . '/' . $option;
                 }
             }
-
             return $this->pathToReturn;
         });
-        $twig->addFunction($function);
+        $assetFunction = new TwigFunction('asset', function (string $path){
+            $request = $_SERVER['REQUEST_URI'];
+            $root = explode("/", $request);
+            $rooteFolder = $root[1];
+            return $this->pathToReturn =  DIRECTORY_SEPARATOR . $rooteFolder . DIRECTORY_SEPARATOR . "public/asset/" . $path;
+        });
+        $twig->addFunction($pathFunction);
+        $twig->addFunction($assetFunction);
         $template = $twig->load($template);
 
         if (!empty($options)) {

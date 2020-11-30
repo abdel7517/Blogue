@@ -22,7 +22,9 @@ class PostsController extends Controller
         $path = $this->request->getRequest();
         $id = array();
         $userSession = $this->request->getSession('user');
-        $user_Name = $userSession['userName'];
+        if($userSession !== ''){
+            $user_Name = $userSession['userName'];
+        }
 
         // get the id from url 
         preg_match('#\d+#', $path, $id);

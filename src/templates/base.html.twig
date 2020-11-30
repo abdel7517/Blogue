@@ -2,7 +2,7 @@
 	<head>
 		{% block head %}
 			<meta charset="utf-8">
-			<link rel="stylesheet" href="style.css"/>
+			<link rel="stylesheet" href=" {{ asset('style.css') }} "/>
 			<title>
 				{% block title %}
 				{% endblock %}
@@ -10,10 +10,11 @@
 		{% endblock %}
 	</head>
 	<body>
+	{% include "component/navBar.html.twig" %}
 		<section id="content">
 			{% block content %}
 				<p>
-					Welcome to the home page
+					Bienvenue sur mon blog
 				</p>
 				<a href="{{ path('billets') }}">voir billets</a>
 			{% endblock %}

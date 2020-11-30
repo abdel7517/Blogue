@@ -61,6 +61,7 @@ class Request
     }
   
     public function sessionDestroy(){
+        unset($_SESSION['user']);
         return session_destroy();
     }
 

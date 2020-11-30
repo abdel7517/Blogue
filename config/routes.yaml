@@ -3,6 +3,11 @@
 #      controller: controllerName
 #      methode: methodeToCall
 routes:
+  # asset:
+  #   path: '#home|index\.?(php)?$#i'
+  #   controller: 'AssetController'
+  #   methode: 'index'
+
   home:
     path: '#home|index\.?(php)?$#i'
     controller: 'HomeController'

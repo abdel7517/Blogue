@@ -40,6 +40,7 @@ class Routeur
                     }
                 }
                 // no route found 
+                http_response_code(404);
                 $this->controller->render('404.html.twig');
             }
             return;

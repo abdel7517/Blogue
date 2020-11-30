@@ -32,9 +32,8 @@ class LoginController extends Controller
             $mailUser = $request->getPost('mail');
             $password = $request->getPost('mdp');
             $userData = array();
-
             $response = $user->checkMail($mailUser);
-            //if true register the state of user on session 
+            
             if ($response) {
                 if ($response['pass'] == $password) {
                     $errorMessage = 'Vous êtes connecté avec succés ';
@@ -51,6 +50,7 @@ class LoginController extends Controller
             }
             return $this->render('user/login.html.twig', ['errorMessage' => $errorMessage]);
         }
+
         return $this->render('user/login.html.twig', ['errorMessage' => $errorMessage]);
     }
 

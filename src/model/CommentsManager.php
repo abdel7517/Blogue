@@ -30,6 +30,17 @@ class CommentsManager extends Manager
         return $array;
     }
 
+    public function getCommentsOfPost(int $id)
+    {
+        $bdd = $this->dbConnect();
+        $response = $bdd->prepare('SELECT * FROM comments WHERE id_Post=:id');
+        $response->execute(array(
+            'id' => $id
+        ));
+        $array = $response->fetchAll(PDO::FETCH_ASSOC);
+        return $array;
+    }
+
 
 
     public function deleteComment($id)
@@ -41,13 +52,15 @@ class CommentsManager extends Manager
         ));
     }
 
-    public function addReport(string $arraySerialized, int $idComment)
+    public function addReport(string $arraySerialized, int $idComment, int $idPost)
     {
         $bdd = $this->dbConnect();
-        $req = $bdd->prepare('UPDATE comments SET reports = :report WHERE id = :id ');
+        $req = $bdd->prepare('UPDATE comments SET reports = :report, 
+        id_Post = :id_Post WHERE id = :id ');
         $req->execute(array(
             'report' => $arraySerialized,
-            'id'=> $idComment
+            'id'=> $idComment,
+            'id_Post'=> $idPost
         ));
     }
 
@@ -61,7 +74,11 @@ class CommentsManager extends Manager
             'id_Post' => $id_Post
         ));
         $array = $req->fetchAll(PDO::FETCH_ASSOC);
-        return $array[0]['reports'];
+        if(!empty($array))
+        {
+            return $array[0]['reports'];
+        }
+         return false;
     }
 
 }

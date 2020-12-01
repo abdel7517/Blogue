@@ -23,7 +23,6 @@ class CommentsController extends Controller
 
     public function reportComment()
     {
-        $this->getParametersUrl();
         $userSession = $this->request->getSession('user');
         //get the id of comment and post 
         $id = $this->getParametersUrl();
@@ -33,9 +32,9 @@ class CommentsController extends Controller
         $reportSerialised = $this->commentsManager->getReport($id_comment, $id_post);
         $UsersNameReport = unserialize($reportSerialised);
         $post = $this->postManager->getPost($id[0]);
-        $comments = $this->commentsManager->getComments();
+        $comments = $this->commentsManager->getCommentsOfPost($id_post);
         $message = "";
-        if($UsersNameReport !== false){
+        if( $UsersNameReport !== false){
             foreach ($UsersNameReport as $UserNameReport) {
                 if ($UserNameReport == $userSession['userName']) {
                     //already signal 
@@ -52,7 +51,7 @@ class CommentsController extends Controller
         if($this->aleradyPosted == false){
             $UsersNameReport[] = $userSession['userName'];
             $UsersNameReportSerialized = serialize($UsersNameReport);
-            $this->commentsManager->addReport($UsersNameReportSerialized,$id_comment);
+            $this->commentsManager->addReport($UsersNameReportSerialized,$id_comment, $id_post);
             $message = 'Vous avez bien signalez ce commentaire';
             return $this->render('billet.html.twig', [
                 'post'=> $post, 'log'=> true, 'comments'=> $comments, 
@@ -64,14 +63,13 @@ class CommentsController extends Controller
 
     public function deleteComment()
     {
-
         $id = $this->getMultipleId();
         $id_comment = $id[0][0];
         $id_post = $id[0][1];
         $this->commentsManager->deleteComment($id_comment);
 
         $post = $this->postManager->getPost($id_post);
-        $comments = $this->commentsManager->getComments();
+        $comments = $this->commentsManager->getCommentsOfPost($id_post);
         $user_Name = $this->userSession['userName'];
 
         return $this->render('billet.html.twig', [
@@ -91,7 +89,7 @@ class CommentsController extends Controller
             if ($this->request->getMethode() == 'POST') {
                 $this->commentsManager->addComment($id_post[0], $user_Name, $content);
             }
-            $comments = $this->commentsManager->getComments();
+            $comments = $this->commentsManager->getCommentsOfPost($id_post[0]);
 
             return $this->render('billet.html.twig', [
                 'post' => $post, 'log' => true, 'comments' => $comments, 'user_name' => $user_Name

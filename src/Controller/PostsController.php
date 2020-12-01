@@ -31,7 +31,7 @@ class PostsController extends Controller
         if(count($id) <= 1 )
         {
             $post = $this->postManager->getPost($id[0]);
-            $comments = $this->commentsManager->getComments();
+            $comments = $this->commentsManager->getCommentsOfPost($id[0]);
             if($userSession !== ""){
                 return $this->render('billet.html.twig', [
                     'post'=> $post, 'log'=> true, 'comments'=> $comments, 'id' => $id[0],'user_name' => $user_Name

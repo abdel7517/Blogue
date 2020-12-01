@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<script src="https://kit.fontawesome.com/62d6a78e4f.js" crossorigin="anonymous"></script>
+
 		<title>
 			Document
 		</title>
@@ -36,6 +38,30 @@
 			{% endblock %}
 
 		{% endautoescape %}
+		{% block comment %}
+			{% for comment in comments %}
+				<p>
+					le
+					{{  post.day|date("d/m/Y") }}
+					par
+					{{comment.user_Name}}
+					:
+					{{ comment.content }}
+					<span>
+							<a href=" {{ path('deleteComment', { 'id' : comment.id, 'id_post': post.id}) }} ">
+								<i class="fas fa-times-circle"></i>
+							</a>
+
+						<span class='signal' onclick='popUp()'>
+							Signalez
+						</span>
+
+
+					</span>
+				</p>
+
+			{% endfor %}
+		{% endblock %}
 		{% block tiny %}
 
 			<script src='https://cdn.tiny.cloud/1/10krz54m4a1cvvgfg5ka98pl4ht4tgv3n7le0zcx9g9wpl72/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
@@ -43,7 +69,6 @@
 				tinymce.init({selector: '#content'});
 				tinymce.init({selector: '#title'});
 			</script>
-
 		{% endblock %}
 
 	</body>

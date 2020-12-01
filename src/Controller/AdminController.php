@@ -22,8 +22,9 @@ class AdminController extends Controller
     public function index()
     {
         $posts = $this->postManager->getPosts();
-        $this->getCommentsReported();
-        $this->render('admin/admin.html.twig', ['posts' => $posts]);
+        $commentsReported = $this->getCommentsReported();
+        $this->render('admin/admin.html.twig', 
+        ['posts' => $posts, 'comments' => $commentsReported]);
         
     }
 
@@ -50,6 +51,8 @@ class AdminController extends Controller
         $path = $this->request->getRequest();
         $id = array();
         preg_match('#[1-9]{1,}#', $path, $id);
+        $comments = $this->commentManager->getComments($id[0]);
+
 
         if (count($id) <= 1) {
             $post = $this->postManager->getPost($id[0]);
@@ -59,7 +62,7 @@ class AdminController extends Controller
 
                 $this->postManager->updatePost($title, $content, $id[0]);
             }
-            return $this->render('admin/billet.html.twig', ['post' => $post]);
+            return $this->render('admin/billet.html.twig', ['post' => $post, 'comments'=> $comments]);
         } else {
             new Exception('L\'url doit contenir un seul id ' . __FILE__ . 'ligne : ' . __LINE__);
         }
@@ -84,19 +87,16 @@ class AdminController extends Controller
         $commentsReported = array();
         foreach($comments as $comment){
             if($comment['reports'] !== null ){
-                // $dataAboutReport = array();
                 $UsersNameReport = unserialize($comment['reports']);
                 $numberOfReport = count($UsersNameReport);
-                $comment['nbOfReport'] =$numberOfReport;
-                $commentsReported[$numberOfReport] = $comment;
-                // $commentsReported[] = $dataAboutReport;
+                $comment['nbOfReport'] = $numberOfReport;
+                $commentsReported[] = $comment;
             }
         }
-        krsort($commentsReported);
-        $posts = $this->postManager->getPosts();
-        return $this->render('admin/admin.html.twig', [
-            'posts' => $posts, 'comments'=> $commentsReported
-            ]);
+        $columns = array_column($commentsReported, 'nbOfReport');
+        array_multisort($columns, SORT_DESC, $commentsReported);
+        // krsort($commentsReported);
+        return $commentsReported;
 
     }
 }

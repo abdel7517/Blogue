@@ -1,13 +1,40 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-	<a href=" {{ path('index') }} ">
-		retour acceuil
-	</a>
-		{% for post in posts %}
-			<br>
-			<a href=" {{ path('billet', {'id': post.id}) }} ">
-				{{ post.title|striptags|raw }}
-			</a>
-		{% endfor %}
+
+
+	{% for post in posts %}
+		<div class="item mb-5">
+
+			<div class="media">
+				<img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="assets/images/blog/blog-post-thumb-1.jpg" alt="image">
+				<div class="media-body">
+					<h3 class="title mb-1">
+						<a href=" {{ path('billet', {'id': post.id}) }} ">
+							{{ post.title|striptags|raw }}
+						</a>
+					</h3>
+					<div class="meta mb-1">
+						<span class="date">
+							Publié le
+							{{ post.day|date("d/m/Y") }}
+						</span>
+						<span class="time">
+							5 min read
+						</span>
+					</div>
+					<div class="intro">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies...
+					</div>
+					<a class="more-link" href=" {{ path('billet', {'id': post.id}) }} ">
+						Read more &rarr;
+					</a>
+				</div>
+				<!--//media-body-->
+			</div>
+			<!--//media-->
+		</div>
+		<!--//item-->
+
+	{% endfor %}
 {% endblock %}

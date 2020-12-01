@@ -1,0 +1,30 @@
+<html lang="fr">
+	<head>
+		{% block head %}
+			<meta charset="utf-8">
+			<link rel="stylesheet" href=" {{ asset('style.css') }} "/>
+			<script src="https://kit.fontawesome.com/62d6a78e4f.js" crossorigin="anonymous"></script>
+			<title>
+				{% block title %}
+				{% endblock %}
+			</title>
+		{% endblock %}
+	</head>
+	<body>
+	{% include "component/navBar.html.twig" %}
+		<section id="content">
+			{% block content %}
+				<p>
+					Bienvenue sur mon blog
+				</p>
+				<a href="{{ path('billets') }}">voir billets</a>
+			{% endblock %}
+		</section>
+		<footer id="footer">
+			{% block footer %}
+				&copy; Copyright 
+				.
+			{% endblock %}
+		</footer>
+	</body>
+</html>

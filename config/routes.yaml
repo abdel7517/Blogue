@@ -12,6 +12,11 @@ routes:
     path: '#home|index\.?(php)?$#i'
     controller: 'HomeController'
     methode: 'index'
+  
+  contact:
+    path: '#contact#i'
+    controller: 'HomeController'
+    methode: 'contact'
 
   billets:
     path: '#billets#i'

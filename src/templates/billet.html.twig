@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 {% block content %}
+   
 	{% autoescape false %}
 		<p>
 			{{ post.title }}
@@ -24,13 +25,13 @@
 	<h2>
 		Commentaires:
 	</h2>
-	<p>
+	<p class="confirmReport">
 		{{message}}
 	</p>
 	{% for comment in comments %}
 		<p>
 			le
-			{{  post.day|date("d/m/Y") }}
+			{{  comment.day|date("d/m/Y") }}
 			par
 			{{comment.user_Name}}
 			:
@@ -42,9 +43,9 @@
 					</a>
 
 				{% endif %}
-				<span class='signal' onclick='popUp()'>
-					Signalez
-				</span>
+				<a href=" {{ path('reportComment', { 'idPost': post.id, 'id' : comment.id }) }} ">Signalez</a>
+					
+				
 
 
 			</span>
@@ -53,7 +54,6 @@
 	{% endfor %}
 
 	{% block js %}
-		<link rel="stylesheet" href="popupS.css">
-		<script src=" {{path('js/main.js')}} "></script>
+
 	{% endblock %}
 {% endblock %}

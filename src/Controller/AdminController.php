@@ -11,7 +11,8 @@ use App\model\PostManager;
 class AdminController extends Controller
 {
 
-    private $request, $postManager, $commentManager;
+    private  $postManager, $commentManager;
+    public $request;
     public function __construct()
     {
         $this->request = new Request;
@@ -41,16 +42,13 @@ class AdminController extends Controller
             return $this->render('admin/addPost.html.twig', ["message" => $message]);
         }
 
-
-
         return  $this->render('admin/addPost.html.twig', ["message" => $message]);
     }
 
     public function update()
     {
         $path = $this->request->getRequest();
-        $id = array();
-        preg_match('#[1-9]{1,}#', $path, $id);
+        $id = $this->getId();
         $comments = $this->commentManager->getComments($id[0]);
 
 
@@ -71,8 +69,7 @@ class AdminController extends Controller
     public function delete()
     {
         $path = $this->request->getRequest();
-        $id = array();
-        preg_match('#[1-9]{1,}#', $path, $id);
+        $id = $this->getId();
         $posts = $this->postManager->getPosts();
         if (count($id) <= 1) {
             $this->postManager->deletePost($id[0]);

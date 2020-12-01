@@ -10,7 +10,29 @@ use Twig\Loader\FilesystemLoader as Filesystem;
 class Controller
 {
     private $pathToReturn = '';
+    public $request;
+
+    public function __construct()
+    {
+        $this->request = new Request;
+
+    }
+    
+     //return an array of multiple id in the order entered in the url
+     public function getMultipleId()
+     {
+         $path = $this->request->getRequest();
+         preg_match_all('#\d+#', $path, $id);
+         return $id;
+     }
    
+    public function getId(): array
+    {
+        $path = $this->request->getRequest();
+        $id = array();
+        preg_match('#[1-9]{1,}#', $path, $id);
+        return $id;
+    }
 
     public function getParametersUrl()
     {

@@ -11,8 +11,8 @@ use App\model\PostManager;
 class CommentsController extends Controller
 {
 
-    private $request, $commentsManager, $postManager, $userSession;
-    private $aleradyPosted = false;
+    private  $commentsManager, $postManager, $userSession, $aleradyPosted = false;
+    public  $request;
     public function __construct()
     {
         $this->request = new Request;
@@ -99,19 +99,7 @@ class CommentsController extends Controller
         }
     }
 
-    private function getId()
-    {
-        $path = $this->request->getRequest();
-        $id = array();
-        preg_match('#[1-9]{1,}#', $path, $id);
-        return $id;
-    }
 
-    //return an array of multiple id in the order entered in the url
-    private function getMultipleId()
-    {
-        $path = $this->request->getRequest();
-        preg_match_all('#\d+#', $path, $id);
-        return $id;
-    }
+
+   
 }

@@ -10,7 +10,8 @@ use Exception;
 
 class PostsController extends Controller
 {
-    private $request, $postManager, $commentsManager;
+    private  $postManager, $commentsManager;
+    public $request;
     public function __construct()
     {
         $this->request = new Request;
@@ -20,14 +21,12 @@ class PostsController extends Controller
     public function getPost()
     {
         $path = $this->request->getRequest();
-        $id = array();
+        $id = $this->getId();
         $userSession = $this->request->getSession('user');
         if($userSession !== ''){
             $user_Name = $userSession['userName'];
         }
 
-        // get the id from url 
-        preg_match('#\d+#', $path, $id);
         if(count($id) <= 1 )
         {
             $post = $this->postManager->getPost($id[0]);

@@ -8,7 +8,7 @@ use Blogue\Request;
 
 class LoginController extends Controller
 {
-    private $request;
+    public $request;
     public function __construct()
     {
         $this->request = new Request;

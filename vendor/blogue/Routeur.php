@@ -61,7 +61,7 @@ class Routeur
 
                 $controller = new $className;
                 if ($controller instanceof Controller) {
-                    //check firewall
+                    //check if user is loged
                     $firWall = new Firewall;
                     if ($firWall->userNeedToLog($nameOfRoute)) {
                         $this->callToLoginController();

@@ -1,3 +1,8 @@
 .confirmReport{
     color: #5fcb71;
 }
+#errorPost{
+    color: red;
+    font-size: 2em;
+    text-align: center;
+}

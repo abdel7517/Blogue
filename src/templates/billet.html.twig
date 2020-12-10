@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block content %}
-   
+
 	{% autoescape false %}
 		<p>
 			{{ post.title }}
@@ -16,12 +16,18 @@
 	<a href=" {{ path('billets') }} ">
 		Retour
 	</a>
-	{% if loged == true %}
-		<form action=" {{ path('post_comment', {'id': post.id }) }} " method='POST'>
-			<input type="text" value="Votre commentaire" name='content'>
-			<input type="submit" value="Envoyer">
-		</form>
-	{% endif %}
+	<form action=" {{ path('post_comment', {'id': post.id }) }} " method='POST' class="input-group mb-3">
+		<input type="text" value="Votre commentaire" name='content' type="text" class="form-control" placeholder="Votre Commentaires" aria-label="Recipient's username" aria-describedby="button-addon2">
+		<div class="input-group-append">
+			{% if loged %}
+				<input type="submit" value="Envoyer" class="btn btn-outline-secondary" type="button" id="button-addon2">
+			{% else %}
+				<button type="button" class="btn btn-outline-secondary" id="button-addon2" data-toggle="popover" title="Identifiez-vous" data-content="L'identification est obligatoire pour commentez">
+					Envoyer
+				</button>
+			{% endif %}
+		</div>
+	</form>
 	<h2>
 		Commentaires:
 	</h2>
@@ -43,17 +49,22 @@
 					</a>
 
 				{% endif %}
-				<a href=" {{ path('reportComment', { 'idPost': post.id, 'id' : comment.id }) }} ">Signalez</a>
-					
-				
+				{% if loged %}
+					<a href=" {{ path('reportComment', { 'idPost': post.id, 'id' : comment.id }) }} ">
+						Signalez
+					</a>
+				{% else %}
+					<button type="button" class="btn btn-lg btn-danger " data-toggle="popover" title="Identifiez-vous" data-content="L'identification est obligatoire pour signalez">
+						Signalez
+					</button>
+				{% endif %}
 
 
 			</span>
 		</p>
 
 	{% endfor %}
-
-	{% block js %}
-
-	{% endblock %}
+{% endblock %}
+{% block js %}
+	<script src=" {{ asset('js/blog.js') }} "></script>
 {% endblock %}

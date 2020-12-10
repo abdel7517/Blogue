@@ -144,7 +144,8 @@
 				<!--//container-->
 			</section>
 			<section class="blog-list px-3 py-5 p-md-5">
-				<div class="container"> {% block content %}{% endblock %}
+				<div class="container"> 
+				{% block content %}{% endblock %}
 
 
 					</div>
@@ -164,7 +165,6 @@
 			<!--//main-wrapper-->
 
 
-			nel-->
 
 
 			<!-- Javascript -->
@@ -175,6 +175,6 @@
 			<!-- Style Switcher (REMOVE ON YOUR PRODUCTION SITE) -->
 			{# <script src=" {{ asset('js/demo/style-switcher.js') }} "></script> #}
 
-
+	{% block js %}{% endblock %}
 		</body>
 	</html>

@@ -8,13 +8,15 @@ class PostManager extends Manager
 {
   
 
-    public function addPost($title, $content)
+    public function addPost($title, $content, $intro, $reads)
     {
         $bdd = $this->dbConnect();
-        $req = $bdd->prepare('INSERT INTO posts (title, content, day) VALUES(:title, :content, NOW())');
+        $req = $bdd->prepare('INSERT INTO posts (title, content, day, intro, timeToRead ) VALUES(:title, :content, NOW(), :intro, :timeToRide)');
         $req->execute(array(
             'title' => $title,
-            'content' => $content
+            'content' => $content,
+            'intro' => $intro,
+            'timeToRide' => $reads
         ));
     }
 
@@ -31,7 +33,7 @@ class PostManager extends Manager
     public function getPosts()
     {
         $bdd = $this->dbConnect();
-        $response = $bdd->query('SELECT id, title FROM posts');
+        $response = $bdd->query('SELECT * FROM posts ORDER BY day desc');
         $array = $response->fetchAll(PDO::FETCH_ASSOC);
         return $array;
     }

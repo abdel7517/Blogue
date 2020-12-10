@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+	 <script src='https://cdn.tiny.cloud/1/10krz54m4a1cvvgfg5ka98pl4ht4tgv3n7le0zcx9g9wpl72/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+	<script>
+	tinymce.init({
+		selector: '#content'
+	});
+	tinymce.init({
+		selector: '#title'
+	});
+	tinymce.init({
+		selector: '#intro'
+	});
+	</script>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			Document
 		</title>
+				<link  rel="stylesheet" href=" {{ asset('style.css') }}  ">
 	</head>
 	{% block name %}
+	<p id="errorPost"> {{ message }} </p>
 		<body>
 			<form action=" {{ path('admin/add') }} " method="post">
 				<input type="text" name='title' value='titre' id="title">
-				<input type="text" name='content' value='lorem lipsu ....' id="content">
+				<label for="intro">Maximum 220 caractères </label>
+				<input type="text" name="intro" maxlength="220" id="intro" value='Entrez ici une intro afficher sur la page des billets, maximum 220 caractère'>
+				<input type="text" name='content' value='Entrez le ici contenue ' id="content">
+				<label for="read">Temps de lecture du blog</label>
+				<input type="number" name="reads" id="reads">
 				<input type="submit" value="envoyer">
 			</form>
 		</body>
@@ -21,17 +39,5 @@
 			</a>
 		</p>
 	{% endblock %}
-	{% block tiny %}
-
-  <script src='https://cdn.tiny.cloud/1/10krz54m4a1cvvgfg5ka98pl4ht4tgv3n7le0zcx9g9wpl72/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
-  <script>
-  tinymce.init({
-    selector: '#content'
-  });
-   tinymce.init({
-    selector: '#title'
-  });
-  </script>
-
-	{% endblock %}
+	
 </html>

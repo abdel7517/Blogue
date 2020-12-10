@@ -33,13 +33,31 @@ class AdminController extends Controller
     {
 
         $methode = $this->request->getMethode();
-        $message = '';
+        $message = 'Votre intro contiens plus de 220 caractères';
         if ($methode == 'POST') {
             $title = $this->request->getPost('title');
             $content = $this->request->getPost('content');
+            $intro = $this->request->getPost('intro');
+            $reads = $this->request->getPost('reads');
+            if(strlen($intro) < 220)
+            {
+                if($reads > 0)
+                {
+                    $this->postManager->addPost($title, $content, $intro, $reads);  
+                    $message ="";                
+                }
+                else
+                {
+                    $message = "Le temps de lecture ne peut être négatif";
+                }
+            }
+           
 
-            $this->postManager->addPost($title, $content);
             return $this->render('admin/addPost.html.twig', ["message" => $message]);
+
+
+
+            
         }
 
         return  $this->render('admin/addPost.html.twig', ["message" => $message]);

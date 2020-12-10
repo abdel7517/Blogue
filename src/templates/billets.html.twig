@@ -20,14 +20,14 @@
 							{{ post.day|date("d/m/Y") }}
 						</span>
 						<span class="time">
-							5 min read
+							{{ post.timeToRead }} min. de lecture
 						</span>
 					</div>
 					<div class="intro">
-						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies...
+						{{ post.intro|striptags|raw  }}
 					</div>
 					<a class="more-link" href=" {{ path('billet', {'id': post.id}) }} ">
-						Read more &rarr;
+						Lire la suite &rarr;
 					</a>
 				</div>
 				<!--//media-body-->

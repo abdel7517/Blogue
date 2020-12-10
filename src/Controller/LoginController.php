@@ -31,11 +31,12 @@ class LoginController extends Controller
         if ($method == "POST") {
             $mailUser = $request->getPost('mail');
             $password = $request->getPost('mdp');
+            $hashPassword = hash("sha256", $password);
             $userData = array();
             $response = $user->checkMail($mailUser);
             
             if ($response) {
-                if ($response['pass'] == $password) {
+                if ($response['pass'] == $hashPassword) {
                     $errorMessage = 'Vous êtes connecté avec succés ';
                     $userData['role'] = $response['role'];
                     $userData['mail'] = $response['mail'];
@@ -87,7 +88,8 @@ class LoginController extends Controller
                         if (filter_var($mailUser, FILTER_VALIDATE_EMAIL)) {
                             $errorMessage = 'Vous êtes connecté avec succés ';
                             $request->newSession("user", $userData);
-                            $user->newUser($userName, $mailUser, $password);
+                            $hashPassword = hash("sha256", $password);
+                            $user->newUser($userName, $mailUser, $hashPassword);
                         } else {
                             $errorMessage = 'Le format de l\'email est incorrect ';
                         }

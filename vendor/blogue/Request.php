@@ -35,7 +35,7 @@ class Request
     }
 
     public function newSession(string $index, $value){
-        if(session_id())
+        if(session_id() !== "")
         {
 
             $_SESSION[$index] = $value;
@@ -48,21 +48,27 @@ class Request
     }
 
     public function getSession(string $index){
-        if(session_id())
+        if(session_id() == "")
         {
+            session_start();
             if(!empty($_SESSION[$index])){
                 return $_SESSION[$index];
             }else{
                 return '';
             }
-
+        }else{
+            if(!empty($_SESSION[$index])){
+                return $_SESSION[$index];
+            }else{
+                return '';
+            }
         }
-        return '';
     }
   
     public function sessionDestroy(){
+        session_start();
         unset($_SESSION['user']);
-        return session_destroy();
+        return true;
     }
 
 

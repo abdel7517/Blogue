@@ -9,6 +9,7 @@
 			Posté le
 			{{ post.day|date("d/m/Y") }}
 		</span>
+		<img src=" {{ asset('images/'~ post.img) }} " alt="">
 		<p>
 			{{ post.content }}
 		</p>

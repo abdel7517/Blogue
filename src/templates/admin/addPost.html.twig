@@ -23,13 +23,14 @@
 	{% block name %}
 	<p id="errorPost"> {{ message }} </p>
 		<body>
-			<form action=" {{ path('admin/add') }} " method="post">
+			<form action=" {{ path('admin/add') }} " method="post" enctype="multipart/form-data">
 				<input type="text" name='title' value='titre' id="title">
 				<label for="intro">Maximum 220 caractères </label>
 				<input type="text" name="intro" maxlength="220" id="intro" value='Entrez ici une intro afficher sur la page des billets, maximum 220 caractère'>
 				<input type="text" name='content' value='Entrez le ici contenue ' id="content">
 				<label for="read">Temps de lecture du blog</label>
 				<input type="number" name="reads" id="reads">
+				<input type="file" name="img" id="">
 				<input type="submit" value="envoyer">
 			</form>
 		</body>

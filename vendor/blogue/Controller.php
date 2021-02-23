@@ -15,17 +15,16 @@ class Controller
     public function __construct()
     {
         $this->request = new Request;
-
     }
-    
-     //return an array of multiple id in the order entered in the url
-     public function getMultipleId()
-     {
-         $path = $this->request->getRequest();
-         preg_match_all('#\d+#', $path, $id);
-         return $id;
-     }
-   
+
+    //return an array of multiple id in the order entered in the url
+    public function getMultipleId()
+    {
+        $path = $this->request->getRequest();
+        preg_match_all('#\d+#', $path, $id);
+        return $id;
+    }
+
     public function getId(): array
     {
         $path = $this->request->getRequest();
@@ -40,15 +39,23 @@ class Controller
         $root = explode("/", $path);
         $keyRootFolder = array_search('public', $root);
         // destroy all folder name before public and the name of route 
-        for($i = 0; $i <= ($keyRootFolder+1); $i ++){
+        for ($i = 0; $i <= ($keyRootFolder + 1); $i++) {
             unset($root[$i]);
         }
         $ordonedArray = array();
-        foreach($root as $folderName){
+        foreach ($root as $folderName) {
             $ordonedArray[] = $folderName;
         }
         return $ordonedArray;
     }
+    public function rootFolder(): string
+    {
+        $path = $_SERVER['REQUEST_URI'];
+        $root = explode("/", $path);
+        $rooteFolder = $root[1];
+        return $rooteFolder;
+    }
+
     public function render(string $template, array $options = null)
     {
         // no use attribut for $rooteFolder,$_SERVER['DOCUMENT_ROOT']  
@@ -57,14 +64,14 @@ class Controller
         $root = explode("/", $path);
         $rooteFolder = $root[1];
         $loged = "";
-      
-            if(!empty($_SESSION['user'])){
-                $loged = true;
-            }
 
-        
+        if (!empty($_SESSION['user'])) {
+            $loged = true;
+        }
 
-        $loader = new Filesystem($_SERVER['DOCUMENT_ROOT'] . '/' . $rooteFolder . '/src/templates');
+
+
+        $loader = new Filesystem('../src/templates');
         $twig = new Environment($loader);
         $twig->addGlobal('loged', $loged);
         $pathFunction = new TwigFunction('path', function (string $path, array $options = null) {
@@ -79,7 +86,7 @@ class Controller
             }
             return $this->pathToReturn;
         });
-        $assetFunction = new TwigFunction('asset', function (string $path){
+        $assetFunction = new TwigFunction('asset', function (string $path) {
             $request = $_SERVER['REQUEST_URI'];
             $root = explode("/", $request);
             $rooteFolder = $root[1];

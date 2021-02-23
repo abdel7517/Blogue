@@ -21,7 +21,6 @@ class LoginController extends Controller
         $request = new Request;
         $errorMessage = '';
         $method = $request->getMethode();
-
         // check if the user are loged 
         $userSession = $this->request->getSession('user');
         if ($userSession != '') {
@@ -32,16 +31,16 @@ class LoginController extends Controller
             $mailUser = $request->getPost('mail');
             $password = $request->getPost('mdp');
             $hashPassword = hash("sha256", $password);
-            $userData = array();
             $response = $user->checkMail($mailUser);
             
             if ($response) {
                 if ($response['pass'] == $hashPassword) {
+                    $userSesssion = [];
                     $errorMessage = 'Vous êtes connecté avec succés ';
-                    $userData['role'] = $response['role'];
-                    $userData['mail'] = $response['mail'];
-                    $userData['userName'] = $response['user_Name'];
-                    $request->newSession("user", $userData);
+                    $userSesssion['role'] = $response['role'];
+                    $userSesssion['mail'] = $response['mail'];
+                    $userSesssion['userName'] = $response['user_Name'];
+                    $request->newSession('user', $userSesssion);
                     return $this->log();
                 } else {
                     $errorMessage = 'L\'association mot de passe, email est incorrect ';
@@ -77,7 +76,7 @@ class LoginController extends Controller
             $userData['mail'] = $mailUser;
             $userData['pass'] = $password;
             $userData['userName'] = $userName;
-            $userData['role'] = null;
+            $userData['role'] = 'user';
             $mailUsed = $user->checkMail($mailUser);
             $userNameUsed = $user->checkUserName($userName);
 

@@ -10,14 +10,8 @@
 		</title>
 	</head>
 	<body>
-		{% autoescape false %}
 			{% block post %}
-				<p>
-					{{ post.title }}
-				</p>
-				<p>
-					{{ post.content }}
-				</p>
+				
 			{% endblock %}
 			{% block form %}
 				<form action=" {{ path('admin/update', {'id': post.id }) }} " method="post">
@@ -37,7 +31,6 @@
 				</p>
 			{% endblock %}
 
-		{% endautoescape %}
 		{% block comment %}
 			{% for comment in comments %}
 				<p>
@@ -51,11 +44,6 @@
 							<a href=" {{ path('deleteComment', { 'id' : comment.id, 'id_post': post.id}) }} ">
 								<i class="fas fa-times-circle"></i>
 							</a>
-
-						<span class='signal' onclick='popUp()'>
-							Signalez
-						</span>
-
 
 					</span>
 				</p>

@@ -8,15 +8,16 @@ class PostManager extends Manager
 {
   
 
-    public function addPost($title, $content, $intro, $reads)
+    public function addPost($title, $content, $intro, $reads, $img)
     {
         $bdd = $this->dbConnect();
-        $req = $bdd->prepare('INSERT INTO posts (title, content, day, intro, timeToRead ) VALUES(:title, :content, NOW(), :intro, :timeToRide)');
+        $req = $bdd->prepare('INSERT INTO posts (title, content, day, intro, timeToRead, img) VALUES(:title, :content, NOW(), :intro, :timeToRead, :img)');
         $req->execute(array(
             'title' => $title,
             'content' => $content,
             'intro' => $intro,
-            'timeToRide' => $reads
+            'timeToRead' => $reads,
+            'img' => $img
         ));
     }
 

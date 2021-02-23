@@ -19,16 +19,16 @@ class Routeur
         $this->path = $this->request->getPath();
         $this->requestURI = $this->request->getRequest();
         $this->rootFolder = $this->request->getNameOfRootFolder();
-        $this->routesFile =  Yaml::parseFile($this->path . '/' . $this->rootFolder . '/config/routes.yaml');
-        $this->controllerPath =  $this->path . '/' .  $this->rootFolder  . '/src/Controller/';
-        $this->pathTemplate = $this->path . '/' . $this->rootFolder . '/src/templates/';
+        $this->routesFile =  Yaml::parseFile('../config/routes.yaml');
+        $this->controllerPath =  '../src/Controller/';
+        $this->pathTemplate =  '../src/templates/';
         $this->getRoute();
     }
 
 
     public function getRoute()
     {
-        $routesFile = $this->path . '/' . $this->rootFolder . '/config/routes.yaml';
+        $routesFile = '../config/routes.yaml';
         // check if file exist 
         if (file_exists($routesFile)) {
             $routes = $this->routesFile['routes'];

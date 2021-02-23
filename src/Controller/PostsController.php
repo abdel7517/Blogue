@@ -22,6 +22,7 @@ class PostsController extends Controller
     {
         $path = $this->request->getRequest();
         $id = $this->getId();
+      
         $userSession = $this->request->getSession('user');
         if($userSession !== ''){
             $user_Name = $userSession['userName'];

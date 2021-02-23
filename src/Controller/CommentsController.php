@@ -23,7 +23,7 @@ class CommentsController extends Controller
 
     public function reportComment()
     {
-        $userSession = $this->request->getSession('user');
+        $userSession = $this->userSession;
         //get the id of comment and post 
         $id = $this->getParametersUrl();
         $id_post = $id[0];
@@ -81,8 +81,6 @@ class CommentsController extends Controller
     {
         $id_post = $this->getId();
         $post = $this->postManager->getPost($id_post[0]);
-
-
         $content = $this->request->getPost('content');
         $user_Name = $this->userSession['userName'];
         if (count($id_post) <= 1) {
